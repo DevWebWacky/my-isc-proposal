@@ -1,22 +1,29 @@
 # Success
-<!--
-Projects should have a definition of done that is measurable, and a
-thorough understanding going in of what the risks are to delivery
--->
 
 ## Definition of done
-<!--
-What does success look like?
--->
+
+The project is done when:
+
+- `ggnarrate` covers all five target geoms (point, line, bar, boxplot, histogram) and generates statistically grounded descriptions, trend, spread, outliers, clustering — rather than structural metadata alone.
+- It integrates with `knitr`'s `fig.alt`, Quarto, and Shiny's `renderPlot()`, so authors get working alt text inside real documents and apps without extra manual steps.
+- It has been submitted to CRAN, passes CRAN's checks, and is either accepted or awaiting review within the grant period.
+- Sample output has been tested against real screen reader software (NVDA or VoiceOver), not just visually inspected by the developer.
+- The package has full unit test coverage for its extraction and summarisation logic, and vignettes covering each supported geom.
 
 ## Measuring success
-<!--
-How will we know when success is achieved, what markers can we use
-along the way
--->
+
+Progress is checked against concrete, verifiable markers at each stage rather than a single pass/fail at the end:
+
+- **Week 7**: the core pipeline correctly summarises a fixed benchmark set of test plots with known statistical properties (known trend direction, known outliers), checkable by anyone against the public test suite.
+- **Week 12**: a plot embedded in a real Quarto document or Shiny app produces alt text that a screen reader actually announces correctly this can be checked by running the example and listening to it.
+- **Week 14**: at least one person outside the project, ideally a screen reader user or someone from the accessibility community, such as the Ghana R Users Community contacts consulted on this proposal — has reviewed sample output and confirmed it's a genuine improvement over no alt text or existing Level 1 tools.
+- **Week 16**: CRAN submission with a clean `R CMD check`.
+- **Post-completion**: downloads, GitHub stars/issues, and whether `knitr`, Quarto or Shiny's own documentation ends up recommending it.
 
 ## Future work
-<!--
-How could this be extended / developed in the future by yourself
-and/or the community in general?
--->
+
+Within this grant, the scope is deliberately limited to `ggplot2` and five common geoms. Natural extensions, for the developer or the wider community to pick up:
+
+- Base R graphics support.
+- Additional and composite geoms: faceted plots, multiple overlaid geoms, log-scaled axes, each of which needs its own summarisation logic.
+- Author-editable descriptions with statistical scaffolding retained, letting an author add the "why" behind a plot (the true Level 3 content only a human can supply) while keeping the automatically generated statistical facts intact underneath, rather than the two being mutually exclusive.

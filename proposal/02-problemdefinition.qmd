@@ -3,22 +3,28 @@ bibliography: references.bib
 ---
 
 # The Problem
+R's plotting ecosystem, built around `ggplot2` [@wickham2016], has tools that describe a chart's structure automatically, but nothing that automatically describes what the data actually shows.
 
-```{=html}
-<!--
-Outlining the issue / weak point / problem to be solved by this
-proposal. This should be a compelling section that sets the reader up
-for the next section - the proposed solution!
+## What the problem is
 
-It is important to cover:
+Every plot produced by `ggplot2`, and rendered into an RMarkdown report, a Quarto document or a Shiny app, is by default invisible to a screen reader beyond its title and axis labels. Some tools exist to fill this gap, but none currently describe what the data actually shows. The most recent, `ggalttext` [@ggalttext2026], inspects a plot's layers, labels and facets and produces text such as "a plot with mpg on the x-axis and disp on the y-axis" which is accurate, but no more informative than reading the axis labels aloud would already be. `BrailleR` [@godfrey2018] takes a similar structural approach for both base R and `ggplot2` graphics. Neither reports the trend, the outliers, the clustering or the spread, the content a sighted reader takes in within a second of looking at the chart.
 
- - [ ] What the problem is
- - [ ] Who it affects
- - [ ] Why is it a problem
- - [ ] What will solving the problem enable (why should it be solved)
- - [ ] Brief summary of existing work and previous attempts (e.g., relevant R packages)
- - [ ] If proposing changes to R itself: letter of support from R Core member
--->
-```
+## Who it affects
 
-An example in-text citation [@wickham2016].
+This affects every screen reader user who encounters an R-generated plot: in academic papers, government statistical reports, business dashboards built in Shiny, and public-facing data journalism. It also affects the authors producing these outputs, most of whom have no accessibility background and no realistic way to hand-write a statistically meaningful description for every chart they generate, even when they want to.
+
+## Why it is a problem
+
+The evidence here is not anecdotal. In a controlled study of screen reader users interacting with online data visualisations, participants extracted information 61.48% less accurately, and took 210.96% longer to do so, than sighted users working with the same charts [@sharif2021]. Where alt text is present at all, it commonly repeats structural metadata rather than conveying the point of the visualisation, echoing the pattern seen in R's own tooling [@jumpingrivers2023]. The Web Content Accessibility Guidelines explicitly call for text alternatives that serve the equivalent purpose of the visual content [@wcag], not merely a technical inventory of what is on the axes.
+
+## What solving it enables
+
+A reliable, automatic, statistically grounded description layer means authors get usable alt text without having to write it, screen reader users get access to the actual content of a chart rather than its scaffolding, and R's publishing tools `knitr`, `Quarto` and `Shiny`, bgain a shared, dependable source of that content rather than each depending on individual authors remembering to supply it.
+
+## Existing work and previous attempts
+
+Beyond `ggalttext` and `BrailleR`, `ggplot2` itself provides `get_alt_text()` and a `labs(alt = ...)` argument, but these only return text the author has already written by hand; the function does not generate a description from the plot's data. `Ra11y` offers a further collection of accessibility helpers for `ggplot2`, again operating at the level of chart structure rather than content. Lundgard and Satyanarayan's four-level model of accessible description [@lundgard2021] shows every existing tool operating at Level 1 (structural), with none reaching Level 2 (statistical) or Level 3 (interpretive).
+
+A 2022 community effort, run as an extension of the Minorities in R (MiR) project, attempted to crowdsource better `ggplot2` alt text using social media and Amazon Mechanical Turk [@mir2022]. It did not produce a general, automated solution, and the gap it identified, description of statistical content, not structure, remains open.
+
+This proposal does not involve changes to R itself, so no letter of support from R Core is required.

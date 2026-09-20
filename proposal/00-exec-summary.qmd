@@ -1,6 +1,9 @@
 # Executive Summary
 
-<!--
-This section provides a condensed view of the entire proposal, one page long.
-It should be a comprehensive high-level overview that captures the essence of the proposal, including its goals, methods, expected outcomes, deliverables, and budget.
--->
+R has several tools for generating alt text automatically, including the recently published `ggalttext` package, but all of them describe a plot's structure rather than its content: which variables sit on which axis, not what the data actually shows. A typical output reads "a plot with mpg on the x-axis and disp on the y-axis" which is accurate, but no more informative to a screen reader user than the plot's own axis labels read aloud. Using Lundgard and Satyanarayan's four-level model of accessible description, every existing R tool operates at Level 1. None reach Level 2 (statistical relations) or Level 3 (the takeaway a sighted reader would draw).
+
+`ggnarrate` a semantic description layer for `ggplot2` visualisations: a package that reads a plot object directly and generates a structured, statistically grounded description such as trend, outliers, spread, clustering, rather than a restatement of its axes. It integrates directly with `knitr`, `Quarto` and `Shiny`, so authors get usable alt text without writing extra code.
+
+The scope include the five most common geoms (point, line, bar, boxplot, histogram), full test coverage, vignettes, and a documented compatibility strategy for keeping pace with `ggplot2`'s own evolution. Base R graphics and multilingual output are identified as next steps but are kept out of this initial release to keep the deliverable realistic within a 16-week, $8,500 budget.
+
+The project is led by Uwakmfon Usen Paul, with Francis Mensah and Samuel Tandoh of the Ghana R Users Community contributing to the proposal's scope and milestone structure.

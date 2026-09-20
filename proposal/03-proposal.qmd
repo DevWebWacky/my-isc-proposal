@@ -1,50 +1,46 @@
 # The proposal
-<!--
-How are you going to solve the problem? Include the concrete actions you
-will take and an estimated timeline. What are likely failure modes and
-how will you recover from them?
-
-This is where the proposal should be outlined.
--->
 
 ## Overview
-<!--
-At a high-level address what your proposal is and how it will address
-the problem identified. Highlight any benefits to the R Community that
-follow from solving the problem. This should be your most compelling
-section.
 
-Include concrete actions you will take and estimated timeline.
--->
+This project builds `ggnarrate`, a semantic description layer for `ggplot2` visualisations: a package that reads a plot object directly, extracts its statistical content such as trend, spread, outliers, clustering, and generates a structured, WCAG-aligned description automatically. It hooks into `knitr`, Quarto and Shiny so authors get usable alt text without writing extra code, and screen reader users get access to what a chart actually shows rather than a restatement of its axis labels.
+
+Existing R tools stop at what Lundgard and Satyanarayan [@lundgard2021] classify as level 1 content: chart type, axis titles, encoded properties. This project targets level 2 content including statistical relations such as trend, spread and outliers, which no existing R tool currently automates. Level 3 (the interpretive "why" behind the chart) remains the author's to supply, and is addressed as a future direction rather than a deliverable of this grant.
+
+Concrete actions and estimated timeline:
+
+1.  Build the extraction layer that reads a `ggplot` object's data, mapped aesthetics and geom type.
+2.  Build a statistical summarisation module per geom type (point, line, bar, boxplot, histogram).
+3.  Build a text-generation layer that turns those statistics into plain-language description.
+4.  Add integration hooks for `knitr`'s `fig.alt`, Quarto, and Shiny's `renderPlot()`.
+5.  Document, test, and submit to CRAN.
 
 ## Detail
-<!--
-Go into more detail about the specifics of the project and how it delivers
-against the problem.
-
-Depending on project type the detail section should include:
--->
 
 ### Minimum Viable Product
 
-<!--
-What is the smallest thing you can build that delivers value to your users?
--->
+The smallest version that delivers real value is support for a single geom, `geom_point()`, producing a description that states direction and strength of association and flags any clear outliers, wired into `knitr`'s `fig.alt` chunk option. That alone would already exceed what any existing R tool produces, since none currently report statistical relationships. Everything beyond that (additional geoms, Quarto/Shiny hooks, Level 3 description) is an extension of this same core, not a separate build.
 
 ### Architecture
 
-<!--
-What does the high-level architecture look like?
--->
+The pipeline runs in four stages, each independently testable:
+
+1.  **Extraction**: reads the `ggplot2` object's data, mapped aesthetics, and geom type.
+2.  **Semantic analysis**: computes trend, outliers, spread and clustering, per geom type.
+3.  **Structured description**: turns those statistics into a plain-language description.
+4.  **Output adapters**: one per publishing target: `knitr` (`fig.alt`), Quarto (HTML/PDF), and Shiny (`renderPlot()` alt attribute).
+
+Adding a new geom later means writing one new module in stage 2; a change to how `knitr`, Quarto or Shiny handle alt text means updating one adapter in stage 4, not touching the rest of the pipeline.
 
 ### Assumptions
 
-<!--
-What assumptions are you making that, if proven false, would invalidate the project?
--->
+- **`ggplot2`'s internal object structure remains introspectable in roughly its current form:** If a future `ggplot2` release changes how plot data and aesthetics are stored internally, the extraction layer would need updating. This is judged low-risk within the grant period, since `ggplot2`'s object model has been stable for years, but it is the single biggest long-term maintenance dependency and is addressed directly below.
+- Statistical summaries computed from the data may not generalise cleanly to more complex plots (log scales, stacked geoms), which are why those are out of scope for this cycle.
+- **A text description, however well generated, cannot fully replace the "why" behind a plot:** the author's own communicative intent. `ggnarrate` is designed to produce a strong default, with the alt text always overridable by the author, rather than claiming to solve accessibility on its own.
 
 ### External dependencies
 
-<!--
-What external dependencies does the project have (e.g. libraries, services, other projects, etc.)?
--->
+- `ggplot2` (core dependency, `ggnarrate` will reads `ggplot2` objects directly)
+- `knitr`, for the `fig.alt` integration hook
+- `Quarto's` rendering pipeline, for HTML/PDF alt-text output
+- `shiny`, for the `renderPlot()` integration hook
+- No external services, APIs, or paid infrastructure are required, the package is self-contained and works entirely offline

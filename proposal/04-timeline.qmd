@@ -1,60 +1,57 @@
 # Project plan
 
 ## Start-up phase
-<!--
-Covering the planning phase, this section should provide a relatively
-detailed plan of how work will start on the project. This section is
-important because projects need to get up and running quickly.
 
+Work begins immediately on grant approval, with the following in place before the coding phase:
 
- - [ ] Setting up collaboration platform inc. code for contributors etc.
- - [ ] License decisions
- - [ ] Reporting framework
--->
-
+- **Collaboration platform**: a public GitHub repository under the developer's account, structured as a standard R package from day one (`R/`, `tests/`, `vignettes/`, `man/`), with issues enabled for anyone in the community to raise problems or suggest geom support.
+- **Licence**: MIT, matching the licensing convention used by `ggplot2` itself and the majority of its extension packages, to keep the package as unrestricted and easy to adopt as possible.
+- **Reporting framework**: a short written progress update posted to the repository's README and to the R Consortium at the end of each milestone.
 
 ## Technical delivery
-<!--
-Covering the actual delivery of the project this section should
-provide at least a high-level description of the implementation.
 
-Including target dates is really important as you need to be committed
-and the ISC need to have a means of tracking delivery
--->
+| Weeks | Deliverable |
+|------------------------------------|------------------------------------|
+| 1 to 3 | Extraction layer: reads a `ggplot2` object's data, mapped aesthetics, and geom type. Unit tests against a fixed set of known plots. |
+| 4 to 7 | Statistical summarisation module covering point, line, bar, boxplot and histogram geoms, with tests against datasets with known statistical properties. |
+| 8 to 10 | Text-generation layer converting statistics into plain-language description, reviewed against WCAG alt-text guidance. |
+| 11 to 12 | Integration hooks: `knitr`'s `fig.alt`, Quarto, and Shiny's `renderPlot()`. |
+| 13 to 14 | Vignettes, full documentation, and internal review against real screen reader software (NVDA/VoiceOver). |
+| 15 | CRAN submission and checks. |
+| 16 | Buffer for CRAN reviewer feedback and any required fixes. |
 
 ## Other aspects
 
-<!--
-How will you ensure that your work is available to the widest number
-of people? Please specify the open-source or creative commons license(s)
-you will use, how you will host your code so that others can contribute,
-and how you will publicize your work. We encourage you to plan content
-to be shared quarterly on the R Consortium blog.
+The package's usefulness depends on people actually finding and adopting it, so this isn't left until the end:
 
- - [ ] Announcement post
- - [ ] Delivery blog post
- - [ ] Social media
- - [ ] UseR!
- - [ ] ISC meetings
--->
+- Announcement post: published on the R Consortium blog once the MVP is working, to get early feedback before the full geom set is built.
+- Delivery blog post: a second post on completion, covering the finished package, worked examples, and how to adopt it in existing `knitr`/Quarto/Shiny projects.
+- Social media: share via my personal and the Ghana R Users Community's channels/meetups/training sessions, and R-focused spaces such as R-bloggers and the `#rstats` community, at both the announcement and delivery stages.
+- ISC meetings: I would be happy to present progress at ISC meetings if invited, particularly around the midpoint (week 8) when the statistical summarisation module is complete and demonstrable.
+- UseR!: no UseR! talk is planned within the grant period itself, given the timeline, but a submission for the following year's conference is a realistic follow-on once the package has real-world usage to report on.
 
 ## Budget & funding plan
 
-<!--
-Note that the maximum grant is $10k USD. The proposal should be in USD.
 
-Outline the milestones for development and how much funding will be
-required for each stage (as payments will be tied to project milestone
-completion). This also helps the ISC in the event of partial funding. 
-Each milestone should specify the work to be done and the
-expected outcomes, providing enough detail for the ISC to understand
-the scope of the project work and assess the likelihood of success.
+Total requested: **\$8,500 USD**
 
-We expect that most of the budget will be allocated
-for labor costs. We do not cover indirect costs. The ISC grants cannot
-cover such things as travel, lodging, food, journal publication fees,
-or personal hardware. Cloud services may be covered if they are specific
-to the project and the project period. The ISC reserves the right to vet
-how funds are used for each project separately. If in doubt, please reach
-out to us.
--->
+
+**Milestone 1: Core pipeline (Weeks 1 - 7) - \$3,800**
+
+**Work**: Extraction layer and statistical summarisation module for all five target geoms, with unit tests.
+
+**Outcome**: A working internal pipeline that can take a `ggplot2` object and produce statistically accurate summaries, verifiable by the ISC via the public repository and test suite.
+
+
+**Milestone 2: Text generation and integration (Weeks 8 - 12) - \$2,700**
+
+**Work**: Text-generation layer, WCAG-aligned review, and integration hooks for `knitr`, Quarto and Shiny.
+
+**Outcome**: A usable package producing real alt text end-to-end inside actual R Markdown/Quarto/Shiny workflows.
+
+
+**Milestone 3: Documentation, testing, and CRAN submission (Weeks 13 - 16) - \$2,000**
+
+**Work**: Vignettes, full documentation, screen reader testing, CRAN submission and any resulting fixes.
+
+**Outcome**: a CRAN-submitted package with complete documentation, ready for public use.

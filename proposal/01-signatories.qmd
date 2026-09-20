@@ -1,32 +1,29 @@
 # Signatories
-<!--
-This section provides the ISC with a view of the support received from
-the community for a proposal. Acceptance isn't predicated on
-popularity but community acceptance is important. Willingness to
-accept outside input is also a good marker for project delivery.
-
-An optional section would be for R-Core signatories where changes to R
-are proposed.
--->
 
 ## Project team
-<!--
-Who are the people responsible for actually delivering the project if
-the proposal gets accepted and are already signed up and rearing to
-go? Briefly describe all participants and the skills they will bring
-to the project. Include public artifacts such as code repositories to
-show their tack record.
--->
+
+**Uwakmfon Usen Paul, MLS**: R Programming Instructor at the Ghana R Users Community
+
+**GitHub**: <https://github.com/DevWebWacky>
+
+I will be the sole developer delivering this project. I am proficient in R and Python. I have so far built and maintain 4 R packages and 1 python package, two (R) of which has been published in CRAN, one pending final approval, and one in development stage. Below are the packages: 
+
+- **triageR** (CRAN): a clinical prediction modelling package aligned with TRIPOD+AI reporting standards, including an optional AI-assisted layer for method recommendation. 
+
+- **statease** (CRAN): runs statistical tests and generates plain-English explanations of the results automatically. 
+
+- **rgrind** (pending CRAN approval): a gamified R learning tool, reflecting my interest in making R more approachable.
+
+- **cystimap** (Development stage): an R package for reproducible spatial risk mapping.
+
+- **rpynative** (PyPI): rpynative lets Python developers load and use R packages as if they were normal Python packages. No R syntax, no manual object conversion, and unlike other R-Python bridges, rpynative supports real IDE autocomplete and rich Jupyter/Colab display for R functions.
+
 
 ## Contributors
-<!--
-Who are the people who have actively helped with this proposal but
-won't necessarily be on the core project team later?
--->
+
+- **Francis Mensah**, Founder, Ghana R Users Community
+- **Samuel Tandoh**, Co-founder and Executive Director, Ghana R Users Community
 
 ## Consulted
-<!--
-Who has been given the opportunity to provide feedback on the
-proposal?
--->
 
+- **Mr. George Kyei**, R Trainer, Ghana R Users Community.
